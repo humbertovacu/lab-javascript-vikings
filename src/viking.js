@@ -70,10 +70,32 @@ class War {
         let newViking = Math.floor(Math.random() * this.vikingArmy.length);
         let damage = this.vikingArmy[newViking].strength;
 
-       let saxonDamage = this.saxonArmy[newSaxon].receiveDamage(damage);
-       
-    }
+        let result = this.saxonArmy[newSaxon].receiveDamage(damage)
+        return result
+
+       }
+
+    saxonAttack() {
+        let newSaxon = Math.floor(Math.random() * this.saxonArmy.length); 
+        let newViking = Math.floor(Math.random() * this.vikingArmy.length);
+        let damage = this.saxonArmy[newSaxon].strength;
+
+        let result = this.vikingArmy[newViking].receiveDamage(damage)
+        return result 
+    
+       }
+
+    showStatus(){
+        if (this.saxonArmy.length === 0) {
+            return "Vikings have won the war of the century!"
+        };
+        if (this.vikingArmy.length === 0) {
+            return "Saxons have fought for their lives and survived another day..."
+        }
+       }
+    
 }
+
 
 
 
