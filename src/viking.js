@@ -62,37 +62,34 @@ class War {
         this.saxonArmy.push(saxon);
     }
 
-    vikingAttack() {
-        // const war = new War();
-        // war.addViking({20,60})
-        // const saxonSoldier = new Saxon()
-        let newSaxon = Math.floor(Math.random() * this.saxonArmy.length); 
-        let newViking = Math.floor(Math.random() * this.vikingArmy.length);
-        let damage = this.vikingArmy[newViking].strength;
+    genericAttack(attackersArray, defendersArray) {
+        let randomAttackerIndex = Math.floor(Math.random() * attackersArray.length);
+        let randomAttacker = attackersArray[randomAttackerIndex];
+        let randomDefendersIndex = Math.floor(Math.random() * defendersArray.length);
+        let randomDefender = defendersArray[randomDefendersIndex];
+        let result = randomDefender.receiveDamage(randomAttacker.strength);
 
-        let result = this.saxonArmy[newSaxon].receiveDamage(damage)
-        return result
+        if (randomDefender.health <= 0) {
+            defendersArray.splice(randomDefendersIndex,1);
+        }
 
-       }
+        return result;
+    }
+
+    vikingAttack(){
+        return this.genericAttack(this.vikingArmy,this.saxonArmy)
+    }
 
     saxonAttack() {
-        let newSaxon = Math.floor(Math.random() * this.saxonArmy.length); 
-        let newViking = Math.floor(Math.random() * this.vikingArmy.length);
-        let damage = this.saxonArmy[newSaxon].strength;
+        return this.genericAttack(this.saxonArmy,this.vikingArmy);
+    }
 
-        let result = this.vikingArmy[newViking].receiveDamage(damage)
-        return result 
-    
-       }
-
-    showStatus(){
-        if(!this.saxonArmy.length){
+    showStatus() {
+        if(this.saxonArmy.length === 0){
             return "Vikings have won the war of the century!";
-        }
-        else if(!this.vikingArmy.length){
+        } else if(!this.vikingArmy.length){
             return "Saxons have fought for their lives and survived another day..."
-        }
-        else {
+        } else {
             return "Vikings and Saxons are still in the thick of battle."
         }
        }
