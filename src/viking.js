@@ -20,32 +20,48 @@ class Viking extends Soldier {
 
        this.name = name; 
     }
-    receiveDamage(damage) {
-        this.health = this.health - damage;
-        if (this.health > 0) {
-            return `${this.name} has received ${damage} points of damage`
-        }
-        if (!this.health) {
-            return `${this.name} has died in act of combat`
-        }
-    }
+    // receiveDamage(damage) {
+    //     this.health = this.health - damage;
+    //     if (this.health > 0) {
+    //         return `${this.name} has received ${damage} points of damage`
+    //     }
+    //     if (!this.health) {
+    //         return `${this.name} has died in act of combat`
+    //     }
+
+     receiveDamage(damage) {
+        return genericReceiveDamage(this.health, damage, this.name);
+        
+     }
+
 
     battleCry() {
         return "Odin Owns You All!"
     }
 }
 
+
 // Saxon
 class Saxon extends Soldier {
-   receiveDamage(damage) {
-    this.health = this.health - damage;
-    if (this.health > 0) {
-        return `A Saxon has received ${damage} points of damage`
+//    receiveDamage(damage) {
+//     this.health = this.health - damage;
+//     if (this.health > 0) {
+//         return `A Saxon has received ${damage} points of damage`
+//     }
+//     if (!this.health) {
+//         return `A Saxon has died in combat`
+//     }
+//    }
+    receiveDamage(damage) {
+        return genericReceiveDamage(this.health, damage, "A Saxon");
     }
-    if (!this.health) {
-        return `A Saxon has died in combat`
-    }
-   }
+}
+
+function genericReceiveDamage(health,damage,prefix) {
+    health -= damage;
+    if(health > 0) {
+        return `${prefix} has received ${damage} points of damage`}
+    else return `${prefix} has died in act of combat`;
 }
 
 // War
@@ -68,6 +84,7 @@ class War {
         let randomDefendersIndex = Math.floor(Math.random() * defendersArray.length);
         let randomDefender = defendersArray[randomDefendersIndex];
         let result = randomDefender.receiveDamage(randomAttacker.strength);
+        
 
         if (randomDefender.health <= 0) {
             defendersArray.splice(randomDefendersIndex,1);
